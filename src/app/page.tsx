@@ -2,9 +2,14 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div>
-      <Button>Button</Button>
-      <p className="text-balance text-red-600 text-lg">this is a sample paragraph</p>
+    <div className="m-2 flex gap-4">
+      <Button>Primary</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="destructive">Destructive</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="muted"> Muted</Button>
+      <Button variant="teritary">Teritrary</Button>
     </div>
   );
 }
