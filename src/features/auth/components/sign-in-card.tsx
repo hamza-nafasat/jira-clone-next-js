@@ -1,10 +1,10 @@
-"use client";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -29,7 +29,7 @@ export const SignInCard = () => {
   };
 
   return (
-    <Card className="w-full h-full md:w-[487px] border-none shadow-none">
+    <Card className="w-full h-full sm:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center p-7 ">
         <CardTitle className="text-2xl">Welcome back!</CardTitle>
       </CardHeader>
@@ -71,10 +71,7 @@ export const SignInCard = () => {
           </form>
         </Form>
       </CardContent>
-      <div className="px-7">
-        <DottedSeparator />
-      </div>
-      <CardContent className="p-7 flex flex-col gap-y-4">
+      <CardContent className="pb-7 flex flex-col gap-y-4">
         <Button variant={"secondary"} size={"lg"} className="w-full">
           <FcGoogle className="mr-2 size-5" />
           Login with Google
@@ -83,6 +80,14 @@ export const SignInCard = () => {
           <FaGithub className="mr-2 size-5" />
           Login with Github
         </Button>
+      </CardContent>
+      <CardContent className="pb-7 flex items-center justify-center">
+        <p>
+          Don&apos;t have an account?{" "}
+          <span className="text-blue-700">
+            <Link href="/sign-up">Sign Up</Link>
+          </span>
+        </p>
       </CardContent>
     </Card>
   );
