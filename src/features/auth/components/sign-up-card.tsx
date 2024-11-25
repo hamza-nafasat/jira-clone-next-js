@@ -9,9 +9,11 @@ import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
-import { signUpSchema } from "../schemas";
+import { signUpSchema } from "../utils/schemas";
+import useRegister from "../api/use-register";
 
 export const SignUpCard = () => {
+  const { mutate } = useRegister();
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -22,7 +24,7 @@ export const SignUpCard = () => {
   });
 
   const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    console.log(values);
+    mutate({ json: values });
   };
 
   return (
