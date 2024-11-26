@@ -5,10 +5,34 @@ import { createAdminClient } from "@/lib/appwrite";
 import { ID } from "node-appwrite";
 import { deleteCookie, setCookie } from "hono/cookie";
 import { AUTH_COOKIE_NAME, COOKIEOPTIONS } from "../utils/constants";
+import sessionMiddleware from "@/middlewares/session-middleware";
 
 const app = new Hono()
-  // login api
+
+  // get current user
+  // -----------------
+
+  .get("/current", sessionMiddleware, async (c) => {
+    const user = c.get("user");
+    return c.json({ data: user });
+  })
+
+  // register user
   // -------------
+
+  .post("/register", zValidator("json", signUpSchema), async (c) => {
+    const { email, name, password } = c.req.valid("json");
+    const { account } = await createAdminClient();
+    const user = await account.create(ID.unique(), email, password, name);
+    if (!user) return c.json({ error: "User already exists" }, { status: 400 });
+    const session = await account.createEmailPasswordSession(email, password);
+    setCookie(c, AUTH_COOKIE_NAME, session.secret, COOKIEOPTIONS);
+    return c.json({ message: "Registered Successfully" }, { status: 201 });
+  })
+
+  // login user
+  // ----------
+
   .post("/login", zValidator("json", loginSchema), async (c) => {
     const { email, password } = c.req.valid("json");
     const { account } = await createAdminClient();
@@ -16,24 +40,15 @@ const app = new Hono()
     setCookie(c, AUTH_COOKIE_NAME, session.secret, COOKIEOPTIONS);
     return c.json({ success: true, message: "Login Successfully" });
   })
-  // register api
-  // -------------
-  .post("/register", zValidator("json", signUpSchema), async (c) => {
-    const { email, name, password } = c.req.valid("json");
-    const { account } = await createAdminClient();
 
-    const user = await account.create(ID.unique(), email, password, name);
-    const session = await account.createEmailPasswordSession(email, password);
-
-    setCookie(c, AUTH_COOKIE_NAME, session.secret, COOKIEOPTIONS);
-
-    return c.json({ success: true, message: "Registered Successfully", data: user });
-  })
   // logout
   // ------
-  .post("/logout", async (c) => {
+
+  .post("/logout", sessionMiddleware, async (c) => {
+    const account = c.get("account");
     deleteCookie(c, AUTH_COOKIE_NAME);
-    return c.json({ success: true, message: "Logout Successfully" });
+    account.deleteSession("current");
+    return c.json({ message: "Logout Successfully" }, { status: 200 });
   });
 
 export default app;
