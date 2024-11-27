@@ -11,21 +11,16 @@ export default function Home() {
   const { data, isLoading } = useGetCurrentUser();
   const { mutate } = useLogout();
 
-  const logoutHandler = () => {
-    mutate({});
-  };
-
   useEffect(() => {
-    if (!isLoading && !data) {
-      router.push("/sign-in ");
-    } else {
-      console.log("data", data);
-    }
-  });
-  return (
+    if (!isLoading && !data) router.push("/sign-in ");
+    else console.log("data", data);
+  }, [data, isLoading, router]);
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="m-2">
       only visible to logged in users
-      <Button onClick={logoutHandler}>Logout</Button>
+      <Button onClick={() => mutate({})}>Logout</Button>
     </div>
   );
 }
