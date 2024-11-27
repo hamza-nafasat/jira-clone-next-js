@@ -14,7 +14,7 @@ import useLogout from "../api/use-logout";
 
 const UserButton = () => {
   const { data: user, isLoading } = useGetCurrentUser();
-  const { mutate } = useLogout();
+  const { mutate, isPending } = useLogout();
 
   if (isLoading) {
     return (
@@ -51,6 +51,7 @@ const UserButton = () => {
           <DottedSeparator className=" mb-1 " />
         </div>
         <DropdownMenuItem
+          disabled={isPending}
           onClick={() => mutate({})}
           className="h-10 flex items-center justify-center text-amber-700 font-medium cursor-pointer"
         >
