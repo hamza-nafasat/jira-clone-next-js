@@ -1,10 +1,10 @@
 "use client";
 
-import { DottedSeparator } from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { DottedSeparator } from "@/app/components/dotted-separator";
+import { Button } from "@/app/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/app/components/ui/form";
+import { Input } from "@/app/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";

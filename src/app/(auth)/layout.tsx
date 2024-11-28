@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/app/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,7 +18,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
       <div className="mx-auto max-w-screen-2xl p-4">
         {/* nav bar  */}
         <nav className="flex justify-between items-center">
-          <Image className="w-[80px] h-[80px]" src={"/logo.svg"} alt="logo" width={60} height={60} priority />
+          <Image src={"/logo.svg"} alt="logo" width={164} height={48} priority />
           <div className="flex items-center gap-4">
             <Button asChild variant={"secondary"}>
               <Link href={isSignIn ? "/sign-up" : "/sign-in"}>{isSignIn ? "Sign Up" : "Login"}</Link>

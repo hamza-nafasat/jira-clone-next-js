@@ -2,14 +2,14 @@
 
 import useGetCurrentUser from "../api/use-getCurrentUser";
 import { Loader, LogOut } from "lucide-react";
-import { AvatarFallback, Avatar } from "@/components/ui/avatar";
+import { AvatarFallback, Avatar } from "@/app/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { DottedSeparator } from "@/components/dotted-separator";
+} from "@/app/components/ui/dropdown-menu";
+import { DottedSeparator } from "@/app/components/dotted-separator";
 import useLogout from "../api/use-logout";
 
 const UserButton = () => {
