@@ -42,6 +42,7 @@ export const SignInCard = () => {
             <FormField
               name="email"
               control={form.control}
+              disabled={isPending}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -54,6 +55,7 @@ export const SignInCard = () => {
             <FormField
               name="password"
               control={form.control}
+              disabled={isPending}
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
@@ -71,11 +73,11 @@ export const SignInCard = () => {
         </Form>
       </CardContent>
       <CardContent className="pb-7 flex flex-col gap-y-4">
-        <Button variant={"secondary"} size={"lg"} className="w-full">
+        <Button disabled={isPending} variant={"secondary"} size={"lg"} className="w-full">
           <FcGoogle className="mr-2 size-5" />
           Login with Google
         </Button>
-        <Button variant={"secondary"} size={"lg"} className="w-full">
+        <Button disabled={isPending} variant={"secondary"} size={"lg"} className="w-full">
           <FaGithub className="mr-2 size-5" />
           Login with Github
         </Button>
