@@ -27,9 +27,7 @@ type AdditionalContext = {
 };
 
 const sessionMiddleware = createMiddleware<AdditionalContext>(async (c, next) => {
-  const client = new Client()
-    .setEndpoint(getEnv("NEXT_PUBLIC_APPWRITE_ENDPOINT"))
-    .setProject(getEnv("NEXT_PUBLIC_APPWRITE_PROJECT"));
+  const client = new Client().setEndpoint(getEnv("APPWRITE_ENDPOINT")).setProject(getEnv("APPWRITE_PROJECT"));
 
   const session = getCookie(c, AUTH_COOKIE_NAME);
   if (!session) return c.json({ error: "Unauthorized" }, { status: 401 });

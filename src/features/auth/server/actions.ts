@@ -5,9 +5,7 @@ import { AUTH_COOKIE_NAME } from "../utils/constants";
 
 const getCurrentUserAction = async () => {
   try {
-    const client = new Client()
-      .setEndpoint(getEnv("NEXT_PUBLIC_APPWRITE_ENDPOINT"))
-      .setProject(getEnv("NEXT_PUBLIC_APPWRITE_PROJECT"));
+    const client = new Client().setEndpoint(getEnv("APPWRITE_ENDPOINT")).setProject(getEnv("APPWRITE_PROJECT"));
 
     const cookie = await cookies().get(AUTH_COOKIE_NAME);
     if (!cookie) return null;
