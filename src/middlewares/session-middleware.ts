@@ -1,5 +1,8 @@
 import "server-only";
 
+import { AUTH_COOKIE_NAME } from "@/features/auth/utils/constants";
+import ENV from "@/lib/config";
+import { getCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import {
   Account,
@@ -7,14 +10,11 @@ import {
   Databases,
   Models,
   Storage,
-  type Users as UsersType,
   type Account as AccountType,
   type Databases as DatabasesType,
   type Storage as StorageType,
+  type Users as UsersType,
 } from "node-appwrite";
-import getEnv from "@/lib/config";
-import { getCookie } from "hono/cookie";
-import { AUTH_COOKIE_NAME } from "@/features/auth/utils/constants";
 
 type AdditionalContext = {
   Variables: {
@@ -27,23 +27,27 @@ type AdditionalContext = {
 };
 
 const sessionMiddleware = createMiddleware<AdditionalContext>(async (c, next) => {
-  const client = new Client().setEndpoint(getEnv("APPWRITE_ENDPOINT")).setProject(getEnv("APPWRITE_PROJECT"));
+  try {
+    const client = new Client().setEndpoint(ENV.APPWRITE_ENDPOINT).setProject(ENV.APPWRITE_PROJECT);
 
-  const session = getCookie(c, AUTH_COOKIE_NAME);
-  if (!session) return c.json({ error: "Unauthorized" }, { status: 401 });
-  client.setSession(session);
+    const session = getCookie(c, AUTH_COOKIE_NAME);
+    if (!session) return c.json({ error: "Unauthorized" }, { status: 401 });
+    client.setSession(session);
 
-  const account = new Account(client);
-  const databases = new Databases(client);
-  const storage = new Storage(client);
-  const user = await account.get();
+    const account = new Account(client);
+    const databases = new Databases(client);
+    const storage = new Storage(client);
+    const user = await account.get();
 
-  c.set("account", account);
-  c.set("databases", databases);
-  c.set("storage", storage);
-  c.set("user", user);
-
-  return next();
+    c.set("account", account);
+    c.set("databases", databases);
+    c.set("storage", storage);
+    c.set("user", user);
+  } catch (error) {
+    console.log("error while getting current user", error);
+  } finally {
+    return next();
+  }
 });
 
 export default sessionMiddleware;

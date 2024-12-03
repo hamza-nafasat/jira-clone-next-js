@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
-import useLogin from "../api/use-login";
+import useLogin from "../apis/use-login";
 import { loginSchema } from "../utils/schemas";
 
 export const SignInCard = () => {

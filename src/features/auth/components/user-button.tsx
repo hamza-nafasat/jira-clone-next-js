@@ -1,6 +1,6 @@
 "use client";
 
-import useGetCurrentUser from "../api/use-getCurrentUser";
+import useGetCurrentUser from "../apis/use-get-current-user";
 import { Loader, LogOut } from "lucide-react";
 import { AvatarFallback, Avatar } from "@/app/components/ui/avatar";
 import {
@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/app/components/ui/dropdown-menu";
 import { DottedSeparator } from "@/app/components/dotted-separator";
-import useLogout from "../api/use-logout";
+import useLogout from "../apis/use-logout";
 
 const UserButton = () => {
   const { data: user, isLoading } = useGetCurrentUser();

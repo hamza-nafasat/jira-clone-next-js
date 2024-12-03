@@ -1,6 +1,6 @@
 import { hc } from "hono/client";
 
 import { AppType } from "@/app/api/[[...route]]/route";
-import getEnv from "./config";
+import ENV from "./config";
 
-export const client = hc<AppType>(getEnv("APP_URL"));
+export const client = hc<AppType>(ENV.APP_URL);

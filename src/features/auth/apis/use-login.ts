@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
+import { toast } from "sonner";
 import { InferRequestType, InferResponseType } from "hono";
 import { useRouter } from "next/navigation";
 
@@ -12,11 +13,16 @@ const useLogin = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.login["$post"]({ json });
+      if (!response.ok) throw new Error("Failed to login");
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: ({ message }) => {
+      toast.success(message);
       queryClient.invalidateQueries({ queryKey: ["current"] });
       router.refresh();
+    },
+    onError: () => {
+      toast.error("Login failed");
     },
   });
   return mutation;

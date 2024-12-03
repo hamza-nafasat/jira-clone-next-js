@@ -12,7 +12,7 @@ import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { z } from "zod";
 import { signUpSchema } from "../utils/schemas";
-import useRegister from "../api/use-register";
+import useRegister from "../apis/use-register";
 
 export const SignUpCard = () => {
   const { mutate, isPending } = useRegister();

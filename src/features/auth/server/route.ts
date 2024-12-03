@@ -27,7 +27,7 @@ const app = new Hono()
     if (!user) return c.json({ error: "User already exists" }, { status: 400 });
     const session = await account.createEmailPasswordSession(email, password);
     setCookie(c, AUTH_COOKIE_NAME, session.secret, COOKIEOPTIONS);
-    return c.json({ message: "Registered Successfully" }, { status: 201 });
+    return c.json({ data: user }, { status: 201 });
   })
 
   // login user
@@ -38,7 +38,7 @@ const app = new Hono()
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
     setCookie(c, AUTH_COOKIE_NAME, session.secret, COOKIEOPTIONS);
-    return c.json({ success: true, message: "Login Successfully" });
+    return c.json({ message: "Login Successfully" }, { status: 200 });
   })
 
   // logout
