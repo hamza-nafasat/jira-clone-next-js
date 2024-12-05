@@ -4,9 +4,10 @@ type ConfigTypes = {
   APPWRITE_ENDPOINT: string;
   APPWRITE_PROJECT: string;
   DATABASE_ID: string;
-  WORKSPACE_ID: string;
   APPWRITE_KEY: string;
   IMAGES_BUCKET_ID: string;
+  WORKSPACE_ID: string;
+  MEMBERS_ID: string;
 };
 
 const _config: ConfigTypes = {
@@ -14,9 +15,10 @@ const _config: ConfigTypes = {
   APPWRITE_ENDPOINT: process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!,
   APPWRITE_PROJECT: process.env.NEXT_PUBLIC_APPWRITE_PROJECT!,
   DATABASE_ID: process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-  WORKSPACE_ID: process.env.NEXT_PUBLIC_APPWRITE_WORKSPACE_ID!,
   IMAGES_BUCKET_ID: process.env.NEXT_PUBLIC_APPWRITE_IMAGES_BUCKET_ID!,
   APPWRITE_KEY: process.env.NEXT_APPWRITE_KEY!,
+  WORKSPACE_ID: process.env.NEXT_PUBLIC_APPWRITE_WORKSPACE_ID!,
+  MEMBERS_ID: process.env.NEXT_PUBLIC_APPWRITE_MEMBERS_ID!,
 };
 
 const ENV = new Proxy(_config, {
