@@ -17,7 +17,7 @@ const app = new Hono()
     if (members.total === 0) return c.json({ data: { document: [], total: 0 } });
     const workspaceIds = members.documents.map((member) => member?.workspaceId);
     const workspaces = await databases.listDocuments(ENV.DATABASE_ID, ENV.WORKSPACE_ID, [
-      Query.contains("workspaceId", workspaceIds),
+      Query.contains("$id", workspaceIds),
     ]);
     return c.json({ data: workspaces });
   })
