@@ -47,7 +47,7 @@ const app = new Hono()
   .post("/logout", sessionMiddleware, async (c) => {
     const account = c.get("account");
     deleteCookie(c, AUTH_COOKIE_NAME);
-    account.deleteSession("current");
+    account?.deleteSession("current");
     return c.json({ message: "Logout Successfully" }, { status: 200 });
   });
 
