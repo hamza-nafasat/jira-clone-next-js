@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { QueryProvider } from "@/app/components/query-provider";
+import { QueryProvider } from "@/components/query-provider";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {

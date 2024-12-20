@@ -1,6 +1,7 @@
 import { getCurrentUserAction } from "@/features/auth/server/actions";
 import { getWorkspacesAction } from "@/features/workspaces/actions";
 import { redirect } from "next/navigation";
+import DashboardLoading from "./loading";
 
 export default async function Home() {
   const currentUser = await getCurrentUserAction();
@@ -11,10 +12,5 @@ export default async function Home() {
   else {
     redirect(`/workspaces/${workspaces?.documents?.[0]?.$id}`);
   }
-}
-
-{
-  /* <div className="m-2 bg-neutral-600 p-4">
-<CreateWorkspaceForm />
-</div> */
+  return <DashboardLoading />;
 }
