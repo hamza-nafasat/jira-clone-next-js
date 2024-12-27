@@ -6,11 +6,13 @@ import { RiAddCircleFill } from "react-icons/ri";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { useRouter } from "next/navigation";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+import useCreateWorkspaceModal from "@/features/workspaces/hooks/use-create-workspace-modal";
 
 const WorkspaceSwitcher = () => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
   const { data: workspaces } = useGetAllWorkspaces();
+  const { open } = useCreateWorkspaceModal();
 
   const onSelect = (id: string) => {
     if (id == "#") return;
@@ -20,7 +22,10 @@ const WorkspaceSwitcher = () => {
     <div className="flex flex-col gap-y-2">
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase text-neutral-500 font-bold">Workspaces</p>
-        <RiAddCircleFill className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition" />
+        <RiAddCircleFill
+          onClick={open}
+          className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
+        />
       </div>
 
       <Select onValueChange={onSelect} value={workspaceId || ""}>
@@ -30,7 +35,7 @@ const WorkspaceSwitcher = () => {
 
         <SelectContent>
           {workspaces?.total ? (
-            workspaces?.documents?.map((workspace: any) => (
+            workspaces?.documents?.map((workspace) => (
               <SelectItem key={workspace.$id} value={workspace.$id}>
                 <div className="flex cursor-pointer justify-start items-center gap-3 font-medium">
                   <WorkspaceAvatar image={workspace.image} name={workspace.name} />

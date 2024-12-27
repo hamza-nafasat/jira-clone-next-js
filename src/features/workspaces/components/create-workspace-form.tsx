@@ -14,12 +14,14 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import useCreateWorkspace from "../apis/use-create-workspace";
 import { createWorkspaceSchema } from "../utils/schemas";
+import { useRouter } from "next/navigation";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
+  const router = useRouter();
   const { mutate, isPending } = useCreateWorkspace();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,7 +34,16 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
     const finalValues = { ...values, image: values.image instanceof File ? values.image : "" };
-    mutate({ form: finalValues }, { onSuccess: () => form.reset() });
+    mutate(
+      { form: finalValues },
+      {
+        onSuccess: ({ data }) => {
+          form.reset();
+          onCancel?.();
+          router.push(`/workspaces/${data?.$id}`);
+        },
+      }
+    );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
