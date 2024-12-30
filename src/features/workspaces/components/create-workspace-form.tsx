@@ -15,6 +15,7 @@ import { z } from "zod";
 import useCreateWorkspace from "../apis/use-create-workspace";
 import { createWorkspaceSchema } from "../utils/schemas";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface CreateWorkspaceFormProps {
   onCancel?: () => void;
@@ -129,7 +130,13 @@ const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
             <DottedSeparator className="py-7" />
 
             <div className="flex items-center justify-between">
-              <Button type="button" size={"lg"} variant={"secondary"} onClick={onCancel}>
+              <Button
+                className={cn(!onCancel && "invisible")}
+                type="button"
+                size={"lg"}
+                variant={"secondary"}
+                onClick={onCancel}
+              >
                 Cancel
               </Button>
               <Button disabled={isPending} size={"lg"}>
